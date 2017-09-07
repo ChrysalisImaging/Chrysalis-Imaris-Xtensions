@@ -1,13 +1,13 @@
 # Welcome to the Chrysalis Imaris Xtension Page
 
 
-The Chrysalis Imaris Xtensions have been developed at the University of Minnesota by Dmitri Kotov (kotov003@umn.edu) in Marc Jenkins' laboratory in collaboration with Thomas Pengo of the University of Minnesota University Imaging Center. 
+The [Chrysalis Imaris Xtensions](https://github.com/ChrysalisImaging/Chrysalis-Imaris-Xtensions) have been developed at the University of Minnesota by Dmitri Kotov (kotov003@umn.edu) in Marc Jenkins' laboratory in collaboration with Thomas Pengo of the University of Minnesota University Imaging Center. 
 
 XTChrysalis analyzes static images (4D images), like those acquired on confocal or epifluorescent microscopes, while XTChrysalis2phtn analyzes 2-photon movies (5D images). 
 
 ## Imaris Xtension Features
 
-More detailed explanations of each feature described here as well as additional features can be found in the Chrysalis Xtensions documentation.docx file at the Chrysalis Imaris Xtensions github site.
+More detailed explanations of each feature described here as well as additional features can be found in the Chrysalis Xtensions documentation.docx file at the [Chrysalis Imaris Xtensions github site](https://github.com/ChrysalisImaging/Chrysalis-Imaris-Xtensions).
 
 #### XT Chyrsalis Features
 
@@ -32,7 +32,7 @@ More detailed explanations of each feature described here as well as additional 
  
 The compiled version of Chrysalis can be run in Windows or Mac OSX while the non-compiled code can be run and edited in Matlab. 
 
-See the Chrysalis Xtensions documentation.docx file at the Chrysalis Imaris Xtensions github site for more details.
+See the Chrysalis Xtensions documentation.docx file at the [Chrysalis Imaris Xtensions github site](https://github.com/ChrysalisImaging/Chrysalis-Imaris-Xtensions) for more details.
 
 
 ## More Information about Chrysalis
