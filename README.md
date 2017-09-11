@@ -6,52 +6,60 @@ The [Chrysalis Imaris Xtensions](https://github.com/ChrysalisImaging/Chrysalis-I
 These Xtensions aid in quantitative, multispectral image analysis in Imaris for static images (4D Images), like those acquired on confocal or epifluorescent microscopes, as well as for 2-photon movies (5D images). Additionally, many of these Xtensions are intended for batch processing images. This batch functionality allows for the batching of histo-cytometry analysis, thereby greatly speeding up the histo-cytometry workflow.
 
 
-## Imaris Xtension Features
+## Imaris Xtensions
 
 More detailed explanations of each feature described here as well as additional features can be found in the Chrysalis Xtensions documentation.docx file at the [Chrysalis Imaris Xtensions github site](https://github.com/ChrysalisImaging/Chrysalis-Imaris-Xtensions).
 
-#### XTChyrsalis Features
+The XTChrysalis, XTChrysalis2phtn, XTBatchKissandRun, XTCreateSurfaces, XTExportStatswithRescaleOffset, XTDistanceTransformOutsideObjectForBatchFirst2surfaces, and XTDistanceTransformOutsideObjectForBatchLastNsurfaces Xtensions are run through the XTBatchProcess Xtension thereby allowing for batched image analysis.
+
+#### XTChyrsalis
+
+This Xtension batches static image analysis for a group of images in Imaris. The following steps are applied to each image:
+
+1. Identify SIRPa+ and XCR1+ DCs
+2. Identify activated DCs
+3. Calculate distances from DCs to to neighboring cells
+4. Export TCR and DC surface statistics
 
 
-* *Feature 1*: This feature description.
+#### XTChyrsalis2phtn
+
+This Xtension batches two-photon movie analysis for a group of movies in Imaris. The following steps are applied to each movie:
+
+1. Calculate distances from DCs to to neighboring cells
+2. Quantify interactions between TCR Tg cells and DCs
+3. Export TCR and DC surface statistics
 
 
-#### XTChyrsalis2phtn Features
+#### Sortomato V2.0
+
+This Xtension allows Imaris images to be analyzed in a similar manner to how FlowJo can be used to analyze flow cytometry data. Every statistic available for a surface can be plotted on a 2D plot against any other statistic, for example mean signal intensity of channel 1 can be plotted against mean signal intensity of channel 2. Regions can be identified on the 2D plot, similar to gating in FlowJo, and these regions can be used to subset existing surfaces into new surfaces.
 
 
-* *Feature 1*: This feature description.
+#### XTBatchKissandRun
+
+This Xtension batches the Kiss and Run Xtension to a group of movies in Imaris. This Xtension calculates the distance from DCs to neighboring cells and then quantifies interactions between TCR Tg cells and DCs.
 
 
-#### Sortomato V2.0 Features
+#### XTCreateSurfaces
+
+This Xtension batches the generation of new surfaces based on regions of existing surfaces that were identified with Sortomato.
 
 
-* *Feature 1*: This feature description.
+#### XTExportStatswithRescaleOffset
 
-#### XTBatchKissandRun Features
-
-
-* *Feature 1*: This feature description.
-
-#### XTCreateSurfaces Features
+This Xtension batches the exportation of statistics for TCR Tg cells and DC as a CSV file that can be directly imported in Flowjo for further quantitative analysis.
 
 
-* *Feature 1*: This feature description.
+#### XTDistanceTransformOutsideObjectForBatchFirst2surfaces
+
+This Xtension batches distance transformation for the initial two surfaces in the object list of multiple Imaris image files. Distance transformation calculates the distance from a surface to other cells.
 
 
-#### XTExportStatswithRescaleOffset Features
+#### XTDistanceTransformOutsideObjectForBatchLastNsurfaces
 
+This Xtension batches distance transformation for the last N surfaces in the object list of multiple Imaris image files. Distance transformation calculates the distance from a surface to other cells. The N is set to 2, but can be quickly changed in Matlab by the end user.
 
-* *Feature 1*: This feature description.
-
-#### XTDistanceTransformOutsideObjectForBatchFirst2surfaces Features
-
-
-* *Feature 1*: This feature description.
-
-#### XTDistanceTransformOutsideObjectForBatchLastNsurfaces Features
-
-
-* *Feature 1*: This feature description.
 
 ## How to Run Chrysalis
  
