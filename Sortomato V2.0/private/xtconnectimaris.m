@@ -63,6 +63,11 @@ function [xImarisApp, xImarisID, isNewInstance] = xtconnectimaris(varargin)
         imarislibPath = fullfile(programsFolder, 'Bitplane', imarisConnectFolder, ...
             'XT\matlab\ImarisLib.jar');
         
+        % Hackish solution to multiple imaris versions installed problem
+        % Simply assume this script is installed in the 'private' subdir
+        % of the place where the ImarisLib.jar file is installed
+        imarislibPath = fullfile(fileparts(fileparts(mfilename('fullpath'))),'ImarisLib.jar');
+        
         if isdeployed
             	warning off MATLAB:javaclasspath:jarAlreadySpecified
                 javaaddpath(imarislibPath)
