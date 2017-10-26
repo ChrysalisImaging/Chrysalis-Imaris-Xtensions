@@ -344,22 +344,28 @@ function pushregionsortcallback(hObject, eventData, figSortomatoGraph, figSortom
                 hStatus.ProgressBar.setVisible(true)
 
                 % Add the indicated surfaces to the sorted Surfaces.
-                for s = 1:length(inIdxs)
-                    % Get the surface data for the current index.
-                    sNormals = xObject.GetNormals(inIdxs(s));
-                    sTime = xObject.GetTimeIndex(inIdxs(s));
-                    sTriangles = xObject.GetTriangles(inIdxs(s));
-                    sVertices = xObject.GetVertices(inIdxs(s));
+                if strfind(char(xImarisApp.GetVersion()),' 9.')
+                    sortSurfaces = xObject.CopySurfaces(inIdxs);
+                    sortSurfaces.SetName(sortName);
+                    xScene.AddChild(sortSurfaces,-1);
+                else
+                    for s = 1:length(inIdxs)
+                        % Get the surface data for the current index.
+                        sNormals = xObject.GetNormals(inIdxs(s));
+                        sTime = xObject.GetTimeIndex(inIdxs(s));
+                        sTriangles = xObject.GetTriangles(inIdxs(s));
+                        sVertices = xObject.GetVertices(inIdxs(s));
 
-                    % Add the surface to the sorted Surface using the data.
-                    sortSurfaces.AddSurface(sVertices, sTriangles, sNormals, sTime)
+                        % Add the surface to the sorted Surface using the data.
+                        sortSurfaces.AddSurface(sVertices, sTriangles, sNormals, sTime)
 
-                    % Update the progress bar.
-                    hStatus.ProgressBar.setValue(s)
-                end % for s
+                        % Update the progress bar.
+                        hStatus.ProgressBar.setValue(s)
+                    end % for s
 
-                % Place the sorted Surfaces into the Imaris scene.
-                xScene.AddChild(sortSurfaces, -1)
+                    % Place the sorted Surfaces into the Imaris scene.
+                    xScene.AddChild(sortSurfaces, -1)
+                end
 
             end % if
 
