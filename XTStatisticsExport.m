@@ -1,4 +1,4 @@
-function XTExportStatsWithOffset(aImarisApplicationID)
+function XTStatisticsExport(aImarisApplicationID)
 
 % Parameters
 offset = 0.1;
@@ -21,21 +21,13 @@ vFileName = char(vFileNameString);
 [vOldFolder, vName, vExt] = fileparts(vFileName); % returns [‘C:/Imaris/Images/’, ‘retina’, ‘.ims’]
 vNewFileName = fullfile('g:/BitplaneBatchOutput', [vName, vExt]); % returns ‘c:/BitplaneBatchOutput/retina.ims’
 
-scaleFactorFile = [ vFileName(1:end-4) '.scaleFactors.txt' ];
-if exist(scaleFactorFile,'file')
-    s = importdata(scaleFactorFile);
-    scalef = s.data;
-else
-    scalef = [];
-end
-
 %%%%%% Export all stats for surfaces starting with TCR
-saveTable(vImarisApplication, vNewFileName, offset, scalef);
-saveTable(vImarisApplication, vNewFileName, 0, scalef);
+saveTable(vImarisApplication, vNewFileName, offset);
+saveTable(vImarisApplication, vNewFileName, 0);
 
 end
 
-function saveTable(vImarisApplication, vNewFileName, offset, scalef)
+function saveTable(vImarisApplication, vNewFileName, offset)
 
 surpassObjects = xtgetsporfaces(vImarisApplication);
 names = {surpassObjects.Name};
@@ -52,7 +44,7 @@ for vv = 1:length(surpassObjects)
     fd = fopen(filename,'w');
     %t = table;
     
-    allstats = {'Intensity Mean','Intensity Min','Volume','Position'};
+    allstats = {'Intensity Mean','Intensity Min','Position','Area','Volume','Sphericity'};
     
     headers = {};
     data = {double(statStruct(1).Ids)};
@@ -66,24 +58,9 @@ for vv = 1:length(surpassObjects)
         for i = 1:length(imeans)
             imean = imeans(i);
 
-             sname = statNames{imean};
+            headers{end+1} = statNames{imean};
             
-            [startIndex, endIndex, tokIndex, matchStr, tokenStr, exprNames, splitStr] = regexp(sname,'Channel (?<ChNo>[0-9]+)');
-            
-            scalef_i = 1;
-            if ~isempty(startIndex) 
-                chNo = str2double(exprNames.ChNo);
-                
-                scalef_i = scalef(chNo)*.001;
-                
-                chanName = char(vImarisApplication.GetDataSet.GetChannelName(chNo-1));
-                
-                sname = [sname(1:startIndex-1) chanName];
-            end
-            
-            headers{end+1} = sname;
-            
-            data{end+1} = statStruct(imean).Values/scalef_i+offset;
+            data{end+1} = statStruct(imean).Values+offset;
 
             %t.(statNames{imean})=v;
         end
