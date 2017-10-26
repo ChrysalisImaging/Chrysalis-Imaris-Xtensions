@@ -375,7 +375,7 @@ if isa(vImarisApplication, 'Imaris.IApplicationPrxHelper')
     %%
     %Choose the surfaces
     
-    DC_channel = find(cellfun(@(x) strcmp(x(1:2),'DC'),vNamesList),1);
+    DC_channel = find(cellfun(@(x) ~isempty(strfind(x,'DC')),vNamesList),1);
     TCR_channels = cellfun(@(x) ~isempty(strfind(x,'TCR')),vNamesList);
     
     vTargetSurface = vSurfacesList{DC_channel};
