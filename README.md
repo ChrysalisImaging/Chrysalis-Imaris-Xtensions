@@ -3,7 +3,7 @@
 
 The [Chrysalis Imaris Xtensions](https://github.com/ChrysalisImaging/Chrysalis-Imaris-Xtensions) have been developed at the University of Minnesota by Dmitri Kotov (kotov003@umn.edu) in Marc Jenkins' laboratory in collaboration with Thomas Pengo of the University of Minnesota University Imaging Center. 
 
-These Xtensions aid in quantitative, multispectral image analysis in Imaris for static images (4D Images), like those acquired on confocal or epifluorescent microscopes, as well as for 2-photon movies (5D images). Additionally, many of these Xtensions are intended for batch processing images. This batch functionality allows for the batching of histo-cytometry analysis, thereby greatly speeding up the histo-cytometry workflow.
+These Xtensions aid in quantitative, multispectral image analysis in Imaris for static images (3D Images), like those acquired on confocal or epifluorescent microscopes, as well as for 2-photon movies (3D images over time). Additionally, many of these Xtensions are intended for batch processing images. This batch functionality allows for the batching of histo-cytometry analysis, thereby greatly speeding up the histo-cytometry workflow.
 
 
 ## Imaris Xtensions
