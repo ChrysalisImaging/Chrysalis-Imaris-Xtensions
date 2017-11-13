@@ -16,9 +16,9 @@ The XTChrysalis, XTChrysalis2phtn, XTBatchKissandRun, XTCreateSurfaces, XTExport
 
 This Xtension batches static image analysis for a group of images in Imaris. The following steps are applied to each image:
 
-1. Identify SIRPa+ and XCR1+ DCs
-2. Identify activated DCs
-3. Calculate distances from DCs to to neighboring cells
+1. Create new surfaces that subset DC surfaces based on Sortomato regions
+2. Create new surfaces that identify activated DCs based on Sortomato regions
+3. Calculate distances from each new surface to neighboring cells
 4. Export TCR and DC surface statistics
 
 
@@ -36,10 +36,12 @@ This Xtension batches two-photon movie analysis for a group of movies in Imaris.
 This Xtension allows Imaris images to be analyzed in a similar manner to how FlowJo can be used to analyze flow cytometry data. Every statistic available for a surface can be plotted on a 2D plot against any other statistic, for example mean signal intensity of channel 1 can be plotted against mean signal intensity of channel 2. Regions can be identified on the 2D plot, similar to gating in FlowJo, and these regions can be used to subset existing surfaces into new surfaces.
 
 
-#### XTBatchKissandRun
+#### XTMovieSurfacesAndStats
 
-This Xtension batches the Kiss and Run Xtension to a group of movies in Imaris. This Xtension calculates the distance from DCs to neighboring cells and then quantifies interactions between TCR Tg cells and DCs.
-
+This Xtension also batches two-photon movie analysis for a group of movies in Imaris. The following steps are applied to each movie:
+1. Create new surfaces that subset existing surfaces based on Sortomato regions
+2. Calculate distances from each new surface to neighboring cells
+3. Export TCR and DC surface statistics
 
 #### XTCreateSurfaces
 
