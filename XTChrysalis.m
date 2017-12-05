@@ -161,7 +161,7 @@ for typ = typs;
     
     sortSurfaces.SetName([char(xObject.GetName) ' - ' regionName(6:end)]);
     
-    if strfind(char(xImarisApp.GetVersion()),' 9.')
+    if strfind(char(vImarisApplication.GetVersion()),' 9.')
         sortSurfaces = xObject.CopySurfaces(inIdxs);
         sortSurfaces.SetName([char(xObject.GetName) ' - ' regionName(6:end)]);
         xScene.AddChild(sortSurfaces,-1);
