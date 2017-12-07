@@ -36,7 +36,9 @@ offset = 0.1;
 
 % connect to Imaris interface
 if ~isa(aImarisApplicationID, 'Imaris.IApplicationPrxHelper')
-  javaaddpath ImarisLib.jar
+  if ~exist('ImarisLib')
+      javaaddpath ImarisLib.jar
+  end
   vImarisLib = ImarisLib;
   if ischar(aImarisApplicationID)
     aImarisApplicationID = round(str2double(aImarisApplicationID));
@@ -44,6 +46,10 @@ if ~isa(aImarisApplicationID, 'Imaris.IApplicationPrxHelper')
   vImarisApplication = vImarisLib.GetApplication(aImarisApplicationID);
 else
   vImarisApplication = aImarisApplicationID;
+end
+
+if isempty(vImarisApplication)
+    error('Could not connect to Imaris!')
 end
 
 vImarisDataSet = vImarisApplication.GetDataSet.Clone;
