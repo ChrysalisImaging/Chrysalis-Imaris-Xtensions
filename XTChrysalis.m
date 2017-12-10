@@ -292,7 +292,7 @@ for i_surf = 1:length(listValue)
     fd = fopen(filename,'w');
     %t = table;
     
-    allstats = {'Intensity Mean','Intensity Min','Volume','Position'};
+    allstats = {'Intensity Mean','Intensity Min','Position','Area','Volume','Sphericity'};
     
     headers = {};
     data = {double(statStruct(1).Ids)};
