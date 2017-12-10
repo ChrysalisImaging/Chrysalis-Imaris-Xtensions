@@ -139,18 +139,26 @@ for typ = typs;
     
     sortSurfaces.SetName([char(xObject.GetName) ' - ' regionName(6:end)])
     
-    for s = 1:length(inIdxs)
-        % Get the surface data for the current index.
-        sNormals = xObject.GetNormals(inIdxs(s));
-        sTime = xObject.GetTimeIndex(inIdxs(s));
-        sTriangles = xObject.GetTriangles(inIdxs(s));
-        sVertices = xObject.GetVertices(inIdxs(s));
-
-        % Add the surface to the sorted Surface using the data.
-        sortSurfaces.AddSurface(sVertices, sTriangles, sNormals, sTime)
-    end % s
-
-    xScene.AddChild(sortSurfaces, -1)
+    if strfind(char(vImarisApplication.GetVersion()),' 9.')
+        sortSurfaces = xObject.CopySurfaces(inIdxs);
+        sortSurfaces.SetName([char(xObject.GetName) ' - ' regionName(6:end)]);
+        xScene.AddChild(sortSurfaces,-1);
+    else
+        for s = 1:length(inIdxs)
+            % Get the surface data for the current index.
+            sNormals = xObject.GetNormals(inIdxs(s));
+            sTime = xObject.GetTimeIndex(inIdxs(s));
+            sTriangles = xObject.GetTriangles(inIdxs(s));
+            sVertices = xObject.GetVertices(inIdxs(s));
+            
+            % Add the surface to the sorted Surface using the data.
+            sortSurfaces.AddSurface(sVertices, sTriangles, sNormals, sTime)
+            
+        end % for s
+        
+        % Place the sorted Surfaces into the Imaris scene.
+        xScene.AddChild(sortSurfaces, -1)
+    end
 
     todo=[todo sortSurfaces]
  end
