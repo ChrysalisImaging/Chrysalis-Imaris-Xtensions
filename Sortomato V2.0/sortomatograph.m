@@ -642,7 +642,7 @@ function keyPress(src, e)
         case 'o'
             [FileName,PathName] = uigetfile('settings.mat');
             S = load(fullfile(PathName,FileName),'clipb');
-            clipb = S.clipb
+            clipb = S.clipb;
              
             setSaveStruct(src,e,clipb,true);
     end
@@ -733,7 +733,7 @@ function setSaveStruct(src,e,clipb,shifted)
 
      typs = fieldnames(clipb.regions)';
      
-     for typ = typs;
+     for typ = typs
          mtyp = typ{1};
          
          cregs = clipb.regions.(mtyp);

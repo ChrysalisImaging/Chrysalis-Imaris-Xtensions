@@ -434,7 +434,7 @@ classdef sortomatoellipse < imellipse & dynamicprops
             obj.LabelsPositionCallback = obj.addNewPositionCallback(@(pos) obj.updateLabels(pos));
         end % setLabel
         
-        function [Nin Nout] = count(obj) 
+        function [Nin, Nout] = count(obj) 
             axesGraph = get(obj, 'Parent');
             
             xData = getappdata(axesGraph, 'xData');
