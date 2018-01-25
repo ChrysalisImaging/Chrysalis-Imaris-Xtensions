@@ -48,7 +48,7 @@ function xtexportstats(statStruct, xImarisApp, xObject, varargin)
     
     addOptional(xtexportstatsParser, 'parentHandle', 0, @ishandle)
     
-    addParamValue(xtexportstatsParser, 'Color', 'w', ...
+    addParameter(xtexportstatsParser, 'Color', 'w', ...
         @(arg)any(strcmpi(arg, {'k', 'black', 'w', 'white'})))
     
     parse(xtexportstatsParser, statStruct, xImarisApp, xObject, varargin{:})
@@ -338,7 +338,7 @@ function xtexportstats(statStruct, xImarisApp, xObject, varargin)
         % Update the progress bar.
         hStatus.ProgressBar.setMaximum(length(trackLabels))
 
-        for r = 1:length(trackLabels);
+        for r = 1:length(trackLabels)
             % Get the singlets that makeup the track.
             rTrackEdges = trackEdges(trackIDs == trackLabels(r), :);
             rTrackIds = double(unique(rTrackEdges));

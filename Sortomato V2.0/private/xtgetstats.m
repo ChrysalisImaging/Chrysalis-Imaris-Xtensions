@@ -71,7 +71,7 @@ function statStruct = xtgetstats(xImarisApp, xObject, varargin)
         @(arg)any(strcmpi(arg, validStringArgCell));
     addOptional(xtgetstatsParser, 'StatType', 'All', validateStatReturnArg);
     
-    addParamValue(xtgetstatsParser, 'ReturnUnits', false, @(arg)ismember(arg, [0, 1]))
+    addParameter(xtgetstatsParser, 'ReturnUnits', false, @(arg)ismember(arg, [0, 1]))
     
     parse(xtgetstatsParser, xImarisApp, xObject, varargin{:});
     
