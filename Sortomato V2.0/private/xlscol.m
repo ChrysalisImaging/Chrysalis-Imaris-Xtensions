@@ -47,7 +47,7 @@ base = 26;
 if iscell(a)
   b = cellfun(@xlscol, a, 'UniformOutput', false); % handles mixed case too
 elseif ischar(a)
-  if ~isempty(strfind(a, ':')) % i.e. if is a range
+  if contains(a, ':') % i.e. if is a range
     b = cellfun(@xlscol, regexp(a, ':', 'split'));
   else % if isempty(strfind(a, ':')) % i.e. if not a range
     b = a(isletter(a));        % get rid of numbers and symbols

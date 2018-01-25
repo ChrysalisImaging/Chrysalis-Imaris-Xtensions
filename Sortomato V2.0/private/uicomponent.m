@@ -398,7 +398,7 @@ end
 %% Get the requested component position
 function [pvPairs,position] = getPosition(pvPairs,style)
     position = [];  % default position set by javacomponent to [20,20,60,20]
-    if ~isempty(strfind(lower(style),'chooser'))
+    if contains(lower(style),'chooser')
         position = [0,0,400,250];  % JFileChooser & JColorChooser need a large initial size
         % TODO: use getMinimumSize
     end

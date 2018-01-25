@@ -344,7 +344,7 @@ function pushregionsortcallback(hObject, eventData, figSortomatoGraph, figSortom
                 hStatus.ProgressBar.setVisible(true)
 
                 % Add the indicated surfaces to the sorted Surfaces.
-                if strfind(char(xImarisApp.GetVersion()),' 9.')
+                if contains(char(xImarisApp.GetVersion()),' 9.')
                     sortSurfaces = xObject.CopySurfaces(inIdxs);
                     sortSurfaces.SetName(sortName);
                     xScene.AddChild(sortSurfaces,-1);
