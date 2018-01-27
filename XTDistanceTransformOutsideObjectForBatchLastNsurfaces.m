@@ -70,7 +70,7 @@ if ~vImarisApplication.GetFactory.IsSurfaces(vSurfaces)
             vSurfaces = vImarisApplication.GetFactory.ToSurfaces(vDataItemSurface);
             vDataItemSurface=vChildIndex;
             
-            todo=[todo vSurfaces]
+            todo=[todo vSurfaces];
         end
     end
 end
@@ -78,11 +78,11 @@ if isempty(vSurfaces)
    vDataItemSurface=1618; 
 end
 
-todo = todo((end-N+1):end)
+todo = todo((end-N+1):end);
 
 vProgressDisplay = waitbar(0, 'Distance Transform: Preparation');
 for vSurfaces_i=1:length(todo)
-    vSurfaces = todo(vSurfaces_i)
+    vSurfaces = todo(vSurfaces_i);
 
     vImarisApplication.DataSetPushUndo('Distance Transform');
 
@@ -97,7 +97,6 @@ for vSurfaces_i=1:length(todo)
     %Identify if the Distance Transform will process on Spots or Surface object
     %Script chooses the first Spot or Surface object in the Surpass Scene
         vImarisObject = vImarisApplication.GetFactory.ToSurfaces(vSurfaces);
-        vIsSurfaces=true;
         vSelection=2;
 
     % Create a new channel where the result will be sent
@@ -105,36 +104,25 @@ for vSurfaces_i=1:length(todo)
     vImarisDataSet.SetSizeC(vNumberOfChannels + 1);
     vImarisDataSet.SetChannelName(vNumberOfChannels,['Distance to ', char(vImarisObject.GetName)]);
     vImarisDataSet.SetChannelColorRGBA(vNumberOfChannels, 255*256*256);
-
+    aSizeX = vImarisDataSet.GetSizeX;
+    aSizeY = vImarisDataSet.GetSizeY;
     vSizeT = vImarisDataSet.GetSizeT;
+
     for vTime = 0:vSizeT-1;
-      if vIsSurfaces
 
         % Get the mask DataSet
         vMaskDataSet = vImarisObject.GetMask( ...
           vDataMin(1), vDataMin(2), vDataMin(3), ...
           vDataMax(1), vDataMax(2), vDataMax(3), ...
           vDataSize(1), vDataSize(2), vDataSize(3), vTime);
+        
         for vIndexZ = 1:vDataSize(3)
-          vSlice = vMaskDataSet.GetDataSliceBytes(vIndexZ-1, 0, 0);
-          if vSelection == 1
-            vSlice = vSlice ~= 1;
-          else
-            vSlice = vSlice == 1;
-          end
-          if strcmp(vImarisDataSet.GetType,'eTypeUInt8')
-            vImarisDataSet.SetDataSliceBytes(vSlice, ...
-              vIndexZ-1, vNumberOfChannels, vTime);
-          elseif strcmp(vImarisDataSet.GetType,'eTypeUInt16')
-            vImarisDataSet.SetDataSliceShorts(vSlice, ...
-              vIndexZ-1, vNumberOfChannels, vTime);
-          elseif strcmp(vImarisDataSet.GetType,'eTypeFloat')
-            vImarisDataSet.SetDataSliceFloats(vSlice, ...
-              vIndexZ-1, vNumberOfChannels, vTime);
-          end
+          vSlice=vMaskDataSet.GetDataSubVolumeAs1DArrayBytes(0,0,vIndexZ-1,0,0,aSizeX,aSizeY,1);
+          vSlice = vSlice == 1;
+          vImarisDataSet.SetDataSubVolumeAs1DArrayFloats(single(vSlice), ...
+            0,0,vIndexZ-1,vNumberOfChannels,vTime,aSizeX,aSizeY,1);
+          waitbar((vTime+(vIndexZ/vDataSize(3)))/vSizeT/2, vProgressDisplay);
         end
-      end
-      waitbar((vTime+1)/vSizeT/2, vProgressDisplay);
     end
 
     waitbar(0.5, vProgressDisplay, 'Distance Transform: Calculation');
@@ -151,7 +139,7 @@ vImarisApplication.SetDataSet(vImarisDataSet);
 vFileNameString = vImarisApplication.GetCurrentFileName; % returns ‘C:/Imaris/Images/retina.ims’
 vFileName = char(vFileNameString);
 [vOldFolder, vName, vExt] = fileparts(vFileName); % returns [‘C:/Imaris/Images/’, ‘retina’, ‘.ims’]
-vNewFileName = fullfile('c:/BitplaneBatchOutput', [vName, vExt]); % returns ‘c:/BitplaneBatchOutput/retina.ims’
+vNewFileName = fullfile('f:/BitplaneBatchOutput', [vName, vExt]); % returns ‘c:/BitplaneBatchOutput/retina.ims’
 vImarisApplication.FileSave(vNewFileName, '');
 
 %%
