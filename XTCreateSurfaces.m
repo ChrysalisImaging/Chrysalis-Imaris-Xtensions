@@ -64,11 +64,49 @@ catch err
     % We are in the multiple file case
     % find out the filenames
     filesToProcess = dir([filepath(1:end-4) '_roi*.mat']);
+    filesToProcessPath = sort(arrayfun(@(x) x.name, filesToProcess, 'UniformOutput',false));
     todo=[];
-    for i = 1:length(filesToProcess)
-        filepath = fullfile(pathstr,filesToProcess(i).name);
-        S = load(filepath);
-        todo = [todo createSurfaces(vImarisApplication,S.clipb)];
+    levs=regexp(filesToProcessPath,'(?<prefix>.*roi)(?<level>[0-9]+)(?<sublevel>[a-z]+)?(?<suffix>.*)','names');
+        
+    levels=unique(cellfun(@(x) x.level,levs));
+    for levi = 1:length(levels)
+        lev = levels(levi);
+        pth = fullfile(pathstr,filesToProcessPath{levi});
+        
+        levm = cellfun(@(x) strcmp(x.level,num2str(lev)),levs);
+        levm_n = find(levm);
+        
+        sublevs = levs(levm);
+        
+        if sum(levm)>1 && ~isempty(sublevs{1}.sublevel)
+            error(['Missing "level 0" roi for ' filepath ' and roi ' lev.level]);
+        end
+        
+        % Process level 0 ROI
+        S = load(pth);
+        newsurf = createSurfaces(vImarisApplication,S.clipb);
+        
+        if sum(levm)>1 && length(newsurf)>1
+            error('Can''t do multiple sublevels on more than one level-0 surface');
+        end
+        
+        todo = [todo newsurf];
+        
+        if length(newsurf)>1
+            continue
+        end
+              
+        sname = newsurf.GetName();
+        
+        for slevi = 2:length(sublevs)
+            sublev = sublevs{slevi};
+            
+            pth = fullfile(pathstr,[sublev.prefix sublev.level sublev.sublevel sublev.suffix]);
+            S = load(pth);
+            S.clipb.objectsName = sname;
+            
+            todo = [todo createSurfaces(vImarisApplication,S.clipb)];
+        end   
     end
 end
 %%
@@ -77,7 +115,7 @@ end
 vFileNameString = vImarisApplication.GetCurrentFileName; % returns ‘C:/Imaris/Images/retina.ims’
 vFileName = char(vFileNameString);
 [vOldFolder, vName, vExt] = fileparts(vFileName); % returns [‘C:/Imaris/Images/’, ‘retina’, ‘.ims’]
-vNewFileName = fullfile('g:/BitplaneBatchOutput', [vName, vExt]); % returns ‘c:/BitplaneBatchOutput/retina.ims’
+vNewFileName = fullfile('f:/BitplaneBatchOutput', [vName, vExt]); % returns ‘c:/BitplaneBatchOutput/retina.ims’
 vImarisApplication.FileSave(vNewFileName, '');
 end
 
